@@ -1,5 +1,5 @@
 require 'rspec'
-require 'lib/resources/validator'
+require 'resources/validator'
 
 describe 'Validator' do
 
