@@ -1,0 +1,21 @@
+*.gem
+*.rbc
+*.secret
+/.config
+/coverage/
+/InstalledFiles
+/pkg/
+/spec/reports/
+/test/tmp/
+/test/version_tmp/
+/tmp/
+/Thumbs.db
+db/*.sqlite3
+/config/config.yml
+
+## IntelliJ IDEA:
+.idea
+*.iws
+*.iml
+*.ipr
+out/
