@@ -8,12 +8,6 @@ describe SpotifyClient do
     @client = SpotifyClient.new
   end
 
-  it 'gets an authorization code' do
-    code = "gibberish"
-    response = @client.get_authorization_code_token(code)
-    expect(response.code).to eq("200")
-  end
-
   it 'gets an auth token with client credentials' do
     token = @client.get_client_credentials_token
 
