@@ -51,7 +51,7 @@ class ToneAnalyzerClient
 
     def build_uri(input)
       uri_input = build_uri_input(input)
-      uri_string = URI.escape(@config["watson"]["base_url"] + "#{uri_input}", " !@$%")
+      uri_string = URI.escape(@config["watson"]["base_url"] + "#{uri_input}")
       uri = URI.parse(uri_string)
       @logger.info("uri: " + uri.to_s)
       uri
