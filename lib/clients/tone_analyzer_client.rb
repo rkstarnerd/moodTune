@@ -22,10 +22,7 @@ class ToneAnalyzerClient
     tones = JSON.parse(response.body)["document_tone"]["tones"]
     @logger.info("Tones: #{tones}")
 
-    max_document_tone_score =
-        tones.empty? ? (raise NoMoodError) : tones.max_by { |tone| tone["score"] }
-    mood = max_document_tone_score["tone_name"]
-
+    mood = get_max_tone(tones)
     @logger.info("mood: #{mood}")
     mood
   end
@@ -38,6 +35,13 @@ class ToneAnalyzerClient
       response = get_response(uri)
       @logger.info("response from watson: code - " + response.code + ", body - " + response.body)
       response
+    end
+
+    def get_max_tone(tones)
+      max_document_tone_score =
+          tones.empty? ? (raise NoMoodError) : tones.max_by { |tone| tone["score"] }
+
+      max_document_tone_score["tone_name"]
     end
 
     def build_request(uri)
