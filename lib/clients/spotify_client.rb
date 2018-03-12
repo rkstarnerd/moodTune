@@ -98,7 +98,7 @@ class SpotifyClient
   end
 
   def get_response(uri, request)
-    req_options = { use_ssl: uri.scheme == "https", }
+    req_options = { use_ssl: uri.scheme == "https" }
 
     Net::HTTP.start(uri.hostname, uri.port, req_options) do |https|
       https.request(request)
