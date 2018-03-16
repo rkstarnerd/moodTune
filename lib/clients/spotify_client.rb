@@ -1,20 +1,22 @@
+require 'uri'
 require 'yaml'
 require 'logger'
+require 'net/http'
 
 class SpotifyClient
   def initialize
-    @config = YAML.load_file('config/config.yml')
-    @authorization = @config["spotify"]["base64auth"]
+    @config = YAML.load_file('config/config.yml')["spotify"]
+    @authorization = @config["base64auth"]
     @logger        = Logger.new(STDOUT)
     @logger.level  = Logger::INFO
   end
 
   # uses client_id to prompt user to login and give authorization to access user data
   def get_authorization
-    url = @config["spotify"]["authorization_endpoint"]
+    url = @config["authorization_endpoint"]
 
-    params = [["client_id", @config["spotify"]["client_id"]], ["response_type", "code"],
-              ["redirect_uri", @config["spotify"]["redirect_uri"]]]
+    params = [["client_id", @config["client_id"]], ["response_type", "code"],
+              ["redirect_uri", @config["redirect_uri"]]]
 
     uri = build_uri(url, params)
     request = build_get_request(uri, "Basic #{@authorization}")
@@ -26,10 +28,10 @@ class SpotifyClient
 
   # uses code returned from get_authorization to get access_token
   def get_authorization_code_token(code)
-    url = @config["spotify"]["token_endpoint"]
+    url = @config["token_endpoint"]
 
     params = [["code", code], ["grant_type", "authorization_code"],
-              ["redirect_uri", @config["spotify"]["redirect_uri"]]]
+              ["redirect_uri", @config["redirect_uri"]]]
 
     uri = build_uri(url, params)
     request = build_post_request(uri, "Basic #{@authorization}")
@@ -41,7 +43,7 @@ class SpotifyClient
 
   # uses client_id and client_secret to get access_token, token_type, expires_in, and scope
   def get_client_credentials_token
-    url = @config["spotify"]["token_endpoint"]
+    url = @config["token_endpoint"]
 
     uri = build_uri(url, [])
     request = build_post_request(uri, "Basic #{@authorization}")
@@ -54,7 +56,7 @@ class SpotifyClient
 
   # gets user's first max_num of public playlists
   def get_user_playlists(user_id, max_num_of_playlists)
-    uri = URI.parse(@config["spotify"]["base_user_endpoint"] +
+    uri = URI.parse(@config["base_user_endpoint"] +
                         "#{user_id}/playlists?offset=0&limit=#{max_num_of_playlists}")
     token = get_client_credentials_token
     request = build_get_request(uri, "Bearer #{token}")
@@ -65,7 +67,7 @@ class SpotifyClient
   end
 
   def get_playlist_tracks(user_id, playlist_id, max_num_of_tracks)
-    uri = URI.parse(@config["spotify"]["base_user_endpoint"] +
+    uri = URI.parse(@config["base_user_endpoint"] +
                         "#{user_id}/playlists/#{playlist_id}/tracks?offset=0&limit=#{max_num_of_tracks}")
     token = get_client_credentials_token
     request = build_get_request(uri, "Bearer #{token}")

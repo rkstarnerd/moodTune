@@ -12,7 +12,7 @@ class ToneAnalyzerClient
     @request
     @logger       = Logger.new(STDOUT)
     @logger.level = Logger::INFO
-    @config       = YAML.load_file('config/config.yml')
+    @config       = YAML.load_file('config/config.yml')["watson"]
   end
 
   def get_mood(input)
@@ -46,12 +46,12 @@ class ToneAnalyzerClient
 
     def build_request(uri)
       @request = Net::HTTP::Get.new(uri)
-      @request.basic_auth(@config["watson"]["username"], @config["watson"]["password"])
+      @request.basic_auth(@config["username"], @config["password"])
     end
 
     def build_uri(input)
       uri_input = build_uri_input(input)
-      uri_string = URI.escape(@config["watson"]["base_url"] + "#{uri_input}")
+      uri_string = URI.escape(@config["base_url"] + "#{uri_input}")
       uri = URI.parse(uri_string)
       @logger.info("uri: " + uri.to_s)
       uri
