@@ -1,3 +1,17 @@
 watson:
   username: 'username'
   password: 'password'
+
+spotify:
+  client_id: 'client_id'
+  client_secret: 'client_secret'
+  base64auth: 'base64_encoded_client_id:client_secret'
+  redirect_uri: 'http://localhost:8080/callback/'
+  authorize_endpoint: 'https://accounts.spotify.com/authorize'
+  token_endpoint: 'https://accounts.spotify.com/api/token'
+  base_user_endpoint: 'https://api.spotify.com/v1/users/'
+
+gracenote:
+  client_id: 'client_id'
+  base_url: 'https://cXXXXXXXX.web.cddbp.net/webapi/xml/1.0/'
+  user_id: 'user_id'

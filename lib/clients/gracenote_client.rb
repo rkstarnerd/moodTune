@@ -1,0 +1,2 @@
+class GracenoteClient
+end
