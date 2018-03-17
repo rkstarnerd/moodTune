@@ -23,7 +23,6 @@ class GracenoteClient
       @logger.info("\n\nArtist name: #{artist_name}, Album name: #{album_name}" + " Track name: #{track_name}")
 
       xml_query = build_query(artist_name, album_name, track_name)
-      @logger.info("XML query: #{xml_query}")
 
       uri = URI.parse(@config["base_url"])
       request  = build_request(uri, xml_query)
@@ -38,6 +37,8 @@ class GracenoteClient
       @logger.info "\n\nThere are no details to obtain mood for #{track}."
     end
   end
+
+  private
 
   def build_query(artist_name, album_name, track_name)
     builder = Nokogiri::XML::Builder.new do |xml|
