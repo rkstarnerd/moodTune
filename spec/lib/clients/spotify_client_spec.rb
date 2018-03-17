@@ -8,12 +8,6 @@ describe SpotifyClient do
     @client = SpotifyClient.new
   end
 
-  xit 'gets an auth token with client credentials' do
-    token = @client.get_client_credentials_token
-
-    expect(token).to be_instance_of String
-  end
-
   it 'gets a user\'s saved playlists' do
     max_num = Random.rand(10)
     user_playlists = @client.get_user_playlists("rkmyg1", max_num)
