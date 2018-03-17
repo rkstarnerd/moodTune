@@ -1,10 +1,10 @@
 {
 "collaborative" : false,
 "external_urls" : {
-  "spotify" : "https://open.spotify.com/user/rkmyg1/playlist/5xhBuGO5WOYF0UnI0YYlEk"
+  "spotify" : "https://open.spotify.com/user/1214851524/playlist/1d5gw19rQpEgNRlSWBhMGt"
 },
-"href" : "https://api.spotify.com/v1/users/rkmyg1/playlists/5xhBuGO5WOYF0UnI0YYlEk",
-"id" : "5xhBuGO5WOYF0UnI0YYlEk",
+"href" : "https://api.spotify.com/v1/users/1214851524/playlists/1d5gw19rQpEgNRlSWBhMGt",
+"id" : "1d5gw19rQpEgNRlSWBhMGt",
 "images" : [ {
   "height" : 640,
   "url" : "https://mosaic.scdn.co/640/4a73f7f866aab0d8e01f7a28ff06a64ce1d2376a9f6543d7fad4bbd3d3b0ab8a6254f079c0bc407788e6c15850cc727f973cc0b97e2275f9ced97c78ab7bf6c14c0f120218192454d802a4788890d579",
@@ -22,19 +22,19 @@
 "owner": {
   "display_name": null,
   "external_urls" : {
-    "spotify": "https://open.spotify.com/user/rkmyg1"
+    "spotify": "https://open.spotify.com/user/1214851524"
   },
-  "href": "https://api.spotify.com/v1/users/rkmyg1",
-  "id": "rkmyg1",
+  "href": "https://api.spotify.com/v1/users/1214851524",
+  "id": "1214851524",
   "type": "user",
-  "uri" : "spotify:user:rkmyg1"
+  "uri" : "spotify:user:1214851524"
 },
 "public": true,
 "snapshot_id": "RXf90j8RNJU5hs80XpPcqqLy1TJtijFlkJss4xsnPEjM8yl+rZ4lArif/Tv9ipvH",
 "tracks": {
-  "href": "https://api.spotify.com/v1/users/rkmyg1/playlists/5xhBuGO5WOYF0UnI0YYlEk/tracks",
+  "href": "https://api.spotify.com/v1/users/1214851524/playlists/1d5gw19rQpEgNRlSWBhMGt/tracks",
   "total" : 16
 },
 "type": "playlist",
-"uri": "spotify:user:rkmyg1:playlist:5xhBuGO5WOYF0UnI0YYlEk"
+"uri": "spotify:user:1214851524:playlist:1d5gw19rQpEgNRlSWBhMGt"
 }
