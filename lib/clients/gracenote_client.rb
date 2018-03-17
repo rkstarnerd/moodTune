@@ -16,22 +16,27 @@ class GracenoteClient
   def get_track_mood(track)
     track_details = JSON.parse(track)["track"]
 
-    artist_name = track_details["artists"][0]["name"]
-    album_name  = track_details["album"]["name"]
-    track_name = track_details["name"]
-    @logger.info("Artist name: #{artist_name}, Album name: #{album_name}" +
-                     " Track name: #{track_name}")
+    unless track_details == nil
+      artist_name = track_details["artists"][0]["name"]
+      album_name  = track_details["album"]["name"]
+      track_name  = track_details["name"]
+      @logger.info("\n\nArtist name: #{artist_name}, Album name: #{album_name}" + " Track name: #{track_name}")
 
-    xml_query = build_query(artist_name, album_name, track_name)
-    @logger.info("XML query: #{xml_query}")
+      xml_query = build_query(artist_name, album_name, track_name)
+      @logger.info("XML query: #{xml_query}")
 
-    uri = URI.parse(@config["base_url"])
-    request = build_request(uri, xml_query)
-    response = get_response(uri, request)
+      uri = URI.parse(@config["base_url"])
+      request  = build_request(uri, xml_query)
+      response = get_response(uri, request)
 
-    @logger.info("Response body from get_track_mood: #{response.body}")
+      @logger.info("Response code from get_track_mood: #{response.code}")
 
-    parse_mood(response.body)
+      mood = parse_mood(response.body)
+      @logger.info("Mood: #{mood}")
+      mood
+    else
+      @logger.info "\n\nThere are no details to obtain mood for #{track}."
+    end
   end
 
   def build_query(artist_name, album_name, track_name)
@@ -84,8 +89,7 @@ class GracenoteClient
 
   def parse_mood(response_body)
     doc = REXML::Document.new(response_body)
-    mood = doc.root.elements["RESPONSE"].elements["ALBUM"].elements["TRACK"].elements["MOOD"].text
-    @logger.info("Mood #{mood}")
-    mood
+    mood = doc.root.elements["RESPONSE"].elements["ALBUM"].elements["TRACK"].elements["MOOD"]
+    mood.nil? ? (@logger.info("No response/mood for this track.")) : mood.text
   end
 end
