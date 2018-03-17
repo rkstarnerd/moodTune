@@ -8,7 +8,7 @@ describe SpotifyClient do
     @client = SpotifyClient.new
   end
 
-  it 'gets an auth token with client credentials' do
+  xit 'gets an auth token with client credentials' do
     token = @client.get_client_credentials_token
 
     expect(token).to be_instance_of String
@@ -28,5 +28,10 @@ describe SpotifyClient do
     playlist_tracks = @client.get_playlist_tracks("rkmyg1", playlist_hash["id"], max_num)
 
     expect(playlist_tracks.count).to eq(max_num)
+  end
+
+  it 'gets a playlist\'s id' do
+    playlist = File.read('spec/helpers/spotify_playlist_object.json')
+    expect(@client.get_playlist_id(playlist)).to eq("5xhBuGO5WOYF0UnI0YYlEk")
   end
 end

@@ -11,6 +11,41 @@ class SpotifyClient
     @logger.level  = Logger::INFO
   end
 
+  # gets user's first max_num of public playlists
+  def get_user_playlists(user_id, max_num_of_playlists)
+    uri = URI.parse(@config["base_user_endpoint"] +
+                        "#{user_id}/playlists?offset=0&limit=#{max_num_of_playlists}")
+    @logger.info "Request uri from get_user_playlists: #{uri}"
+
+    token = get_client_credentials_token
+    request = build_get_request(uri, "Bearer #{token}")
+    response = get_response(uri, request)
+
+    @logger.info "Response code from get_user_playlists: #{response.code}"
+    JSON.parse(response.body)["items"]
+  end
+
+  def get_playlist_id(playlist)
+    id = JSON.parse(playlist)["id"]
+    @logger.info "Playlist id: #{id}"
+    id
+  end
+
+  def get_playlist_tracks(user_id, playlist_id, max_num_of_tracks)
+    uri = URI.parse(@config["base_user_endpoint"] +
+                        "#{user_id}/playlists/#{playlist_id}/tracks?offset=0&limit=#{max_num_of_tracks}")
+    @logger.info "Request uri get_playlist_tracks: #{uri}"
+
+    token = get_client_credentials_token
+    request = build_get_request(uri, "Bearer #{token}")
+    response = get_response(uri, request)
+
+    @logger.info "Response code from get_playlist_tracks: #{response.code}"
+    JSON.parse(response.body)["items"]
+  end
+
+  private
+
   # uses client_id to prompt user to login and give authorization to access user data
   def get_authorization
     url = @config["authorization_endpoint"]
@@ -53,31 +88,6 @@ class SpotifyClient
     @logger.info "Response body from get_access_token: #{response.body}"
     JSON.parse(response.body)["access_token"]
   end
-
-  # gets user's first max_num of public playlists
-  def get_user_playlists(user_id, max_num_of_playlists)
-    uri = URI.parse(@config["base_user_endpoint"] +
-                        "#{user_id}/playlists?offset=0&limit=#{max_num_of_playlists}")
-    token = get_client_credentials_token
-    request = build_get_request(uri, "Bearer #{token}")
-    response = get_response(uri, request)
-
-    @logger.info "Response body from get_user_playlists: #{response.body}"
-    JSON.parse(response.body)["items"]
-  end
-
-  def get_playlist_tracks(user_id, playlist_id, max_num_of_tracks)
-    uri = URI.parse(@config["base_user_endpoint"] +
-                        "#{user_id}/playlists/#{playlist_id}/tracks?offset=0&limit=#{max_num_of_tracks}")
-    token = get_client_credentials_token
-    request = build_get_request(uri, "Bearer #{token}")
-    response = get_response(uri, request)
-
-    @logger.info "Response body from get_playlist_tracks: #{response.body}"
-    JSON.parse(response.body)["items"]
-  end
-
-  private
 
   def build_uri(url, params)
     uri = URI.parse(url)
